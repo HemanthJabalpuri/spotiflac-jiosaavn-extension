@@ -1,0 +1,5 @@
+# Build output
+*.spotiflac-ext
+*.zip
+
+node_modules/

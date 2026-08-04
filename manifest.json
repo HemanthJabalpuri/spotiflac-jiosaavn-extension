@@ -1,0 +1,165 @@
+{
+  "name": "jiosaavn",
+  "displayName": "JioSaavn",
+  "version": "1.0.0",
+  "description": "Search and download from JioSaavn up to 320 kbps AAC, with cover art and full metadata embedded into the file.",
+  "author": "admin",
+  "homepage": "https://github.com/sumitkolhe/jiosaavn-api",
+  "icon": "icon.png",
+  "minAppVersion": "3.0.1",
+
+  "type": ["metadata_provider", "download_provider"],
+
+  "skipMetadataEnrichment": true,
+  "skipBuiltInFallback": false,
+
+  "permissions": {
+    "network": [
+      "jiosaavn-api-ten-beryl.vercel.app",
+      "*.vercel.app",
+      "www.jiosaavn.com",
+      "jiosaavn.com",
+      "aac.saavncdn.com",
+      "c.saavncdn.com",
+      "*.saavncdn.com",
+      "api.song.link",
+      "odesli.io"
+    ],
+    "storage": true,
+    "file": true
+  },
+
+  "searchBehavior": {
+    "enabled": true,
+    "primary": false,
+    "placeholder": "Search JioSaavn...",
+    "thumbnailRatio": "square"
+  },
+
+  "urlHandler": {
+    "enabled": true,
+    "patterns": [
+      "jiosaavn.com/song/",
+      "jiosaavn.com/album/",
+      "jiosaavn.com/artist/",
+      "jiosaavn.com/featured/",
+      "jiosaavn.com/s/playlist/",
+      "saavn.com"
+    ]
+  },
+
+  "qualityOptions": [
+    {
+      "id": "AAC_320",
+      "label": "AAC 320 kbps",
+      "description": "Highest quality JioSaavn offers"
+    },
+    {
+      "id": "AAC_160",
+      "label": "AAC 160 kbps",
+      "description": "Good quality, smaller files"
+    },
+    {
+      "id": "AAC_96",
+      "label": "AAC 96 kbps",
+      "description": "Data saver"
+    },
+    {
+      "id": "AAC_48",
+      "label": "AAC 48 kbps",
+      "description": "Low quality"
+    },
+    {
+      "id": "AAC_12",
+      "label": "AAC 12 kbps",
+      "description": "Preview quality"
+    }
+  ],
+
+  "postProcessing": {
+    "enabled": true,
+    "hooks": [
+      {
+        "id": "convert_mp3",
+        "name": "Convert to MP3 320",
+        "description": "Re-encode the downloaded AAC file to MP3 320 kbps, keeping cover art and tags",
+        "defaultEnabled": false,
+        "supportedFormats": ["m4a", "mp4", "aac"]
+      }
+    ]
+  },
+
+  "settings": [
+    {
+      "key": "apiBaseUrl",
+      "label": "API Base URL",
+      "type": "string",
+      "description": "JioSaavn API instance. Use your own deployment if the public one is rate limited.",
+      "default": "https://jiosaavn-api-ten-beryl.vercel.app"
+    },
+    {
+      "key": "searchScope",
+      "label": "Search Results",
+      "type": "select",
+      "description": "What to include in search results. Fewer types = faster searches.",
+      "options": ["everything", "songs+albums", "songs"],
+      "default": "everything"
+    },
+    {
+      "key": "searchLimit",
+      "label": "Song Results Per Search",
+      "type": "number",
+      "description": "How many songs to return (1-50)",
+      "default": 25
+    },
+    {
+      "key": "embedTags",
+      "label": "Embed Cover Art & Metadata",
+      "type": "boolean",
+      "description": "Mux cover art and tags into the file with FFmpeg after download. Turn off to save the raw stream untouched.",
+      "default": true
+    },
+    {
+      "key": "coverSize",
+      "label": "Cover Art Size",
+      "type": "select",
+      "options": ["500x500", "150x150", "50x50"],
+      "default": "500x500"
+    },
+    {
+      "key": "enableOdesli",
+      "label": "Look Up ISRC (Odesli)",
+      "type": "boolean",
+      "description": "Before downloading, ask song.link for the track's ISRC and Tidal/Qobuz IDs. This lets SpotiFLAC grab real lossless instead of AAC when available. Adds one request per track.",
+      "default": false
+    },
+    {
+      "key": "progressScale",
+      "label": "Progress Reporting",
+      "type": "select",
+      "description": "Switch to 'percent' if the download progress bar never moves.",
+      "options": ["fraction", "percent"],
+      "default": "fraction"
+    },
+    {
+      "key": "debug",
+      "label": "Debug Logging",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "key": "testConnection",
+      "label": "Test Connection",
+      "type": "button",
+      "description": "Check that the API instance is reachable",
+      "action": "testConnection"
+    },
+    {
+      "key": "clearCache",
+      "label": "Clear Cache",
+      "type": "button",
+      "description": "Remove cached song lookups",
+      "action": "clearCache"
+    }
+  ]
+}
