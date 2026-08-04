@@ -1,7 +1,13 @@
-# JioSaavn for SpotiFLAC
+<p align="center">
+  <img src="icon.png" alt="JioSaavn for SpotiFLAC" width="128" height="128">
+</p>
 
-Adds JioSaavn as a search and download source. Saves **320 kbps AAC** with the
-cover art and full metadata muxed into the file.
+<h1 align="center">JioSaavn for SpotiFLAC</h1>
+
+<p align="center">
+  Adds JioSaavn as a search and download source.<br>
+  Saves <b>320 kbps AAC</b> with cover art and full metadata muxed into the file.
+</p>
 
 Built against the unofficial [jiosaavn-api](https://github.com/sumitkolhe/jiosaavn-api).
 
