@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Search and download from JioSaavn up to 320 kbps AAC, with cover art and full metadata embedded into the file.",
   "author": "admin",
-  "homepage": "https://github.com/sumitkolhe/jiosaavn-api",
+  "homepage": "https://github.com/asmitsharma-alt/spotiflac-jiosaavn-extension",
   "icon": "icon.png",
   "minAppVersion": "3.0.1",
 
