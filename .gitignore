@@ -1,5 +1,7 @@
 # Build output
 *.spotiflac-ext
 *.zip
+*.sflx
 
+dist/
 node_modules/
