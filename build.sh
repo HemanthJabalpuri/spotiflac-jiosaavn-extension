@@ -45,6 +45,9 @@ done
 # Copy manifest into dist
 cp "$MANIFEST" "$DIST/"
 
+# Copy manifest into dist
+cp "icon.png" "$DIST/"
+
 # Create .sflx (ZIP) from dist contents
 cd "$DIST"
 if command -v zip >/dev/null 2>&1; then
