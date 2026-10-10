@@ -202,11 +202,11 @@ function processCompilations(playlists, result) {
         var playlist = playlists[i];
         var compilation = formatCollection(playlist, 'playlist');
         if (compilation) {
+            // log.debug("[formatArtist] Added compilation: " + compilation.name);
+            compilation.id = "playlist_" + compilation.id;
             compilation.item_type = 'album';
             compilation.album_type = 'compilation';
-            addPlaylistToken(compilation.id);
             result.albums.push(compilation);
-            // log.debug("[formatArtist] Added compilation: " + compilation.name);
         }
     }
 }

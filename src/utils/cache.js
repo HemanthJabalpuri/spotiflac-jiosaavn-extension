@@ -103,32 +103,3 @@ function forceCleanup() {
     cleanup(true);
     return { success: true, message: "Cache cleared!" };
 }
-
-// ----- Playlist token registry ---------------------------------
-function addPlaylistToken(token) {
-    if (!token) return;
-    try {
-        var list = getCache("playlist_tokens");
-        var tokens = list ? JSON.parse(list) : [];
-        if (tokens.indexOf(token) === -1) {
-            tokens.push(token);
-            setCache("playlist_tokens", JSON.stringify(tokens));
-            // log.debug("[addPlaylistToken] Added token: " + token);
-        }
-    } catch (e) {
-        log.debug("[addPlaylistToken] error: " + e.message);
-    }
-}
-
-function isPlaylistToken(token) {
-    if (!token) return false;
-    try {
-        var list = getCache("playlist_tokens");
-        if (!list) return false;
-        var tokens = JSON.parse(list);
-        return tokens.indexOf(token) !== -1;
-    } catch (e) {
-        log.debug("[isPlaylistToken] error: " + e.message);
-        return false;
-    }
-}

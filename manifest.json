@@ -1,8 +1,9 @@
 {
-  "name": "saavnsongs",
-  "displayName": "Saavn Songs",
-  "version": "0.0.9",
+  "name": "jiosaavn",
+  "displayName": "JioSaavn",
+  "version": "1.0.2",
   "description": "Search & download songs from JioSaavn",
+  "homepage": "https://github.com/HemanthJabalpuri/spotiflac-jiosaavn-extension",
   "type": ["metadata_provider", "download_provider"],
   "permissions": {
     "network": [

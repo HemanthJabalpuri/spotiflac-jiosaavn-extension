@@ -4,7 +4,7 @@ set -e
 DIST="dist"
 OUT="$DIST/index.js"
 MANIFEST="manifest.json"
-EXT_NAME="jiosaavn-songs"
+EXT_NAME="jiosaavn"
 
 # Clean and create dist
 rm -rf "$DIST"
@@ -13,7 +13,7 @@ mkdir -p "$DIST"
 # Concatenate in dependency order
 cat > "$OUT" <<'EOF'
 // ============================================================
-// JioSaavn Songs Extension – modular build
+// JioSaavn Extension – modular build
 // ============================================================
 EOF
 

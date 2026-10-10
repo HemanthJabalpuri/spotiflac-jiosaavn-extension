@@ -1,4 +1,4 @@
-var EXT_ID = "saavnsongs";
+var EXT_ID = "jiosaavn";
 
 var API_HOST = 'https://www.jiosaavn.com';
 var API_BASE = API_HOST + '/api.php';
