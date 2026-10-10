@@ -10,8 +10,26 @@ function searchCollections(type, query, limit, page) {
     return result;
 }
 
+function getAlbumById(albumId) {
+    log.debug('[getAlbumById] albumId: ' + albumId);
+    var result = callAPI('content.getAlbumDetails', { albumid: albumId });
+    if (!result) {
+        log.debug('[getAlbumById] No album found for id: ' + albumId);
+        return null;
+    }
+    return result;
+}
+
 function getCollection(type, token) {
     // log.debug('[getCollection] type: ' + type + ', token: ' + token);
+
+    // Album ID prefix detected
+    if (type === 'album' && token && token.indexOf('albumid_') === 0) {
+        var albumId = token.substring('albumid_'.length);
+        return getAlbumById(albumId);
+    }
+
+    // Playlist or album token path
     var extra = { token: token, type: type, includeMetaTags: 0 };
     if (type === 'playlist') {
         extra.p = 1;

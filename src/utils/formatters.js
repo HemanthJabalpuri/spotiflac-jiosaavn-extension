@@ -300,9 +300,14 @@ function formatSearchItem(raw, type) {
         provider_id: EXT_ID
     };
 
-    // Add isrc only for tracks
     if (type === 'track') {
-        item.isrc = token;
+        var more = raw.more_info || {};
+        if (more.album_id) {
+            item.album_id = "albumid_" + more.album_id;
+        }
+        if (more.album) {
+            item.album_name = decodeEntities(more.album);
+        }
     }
 
     return item;
