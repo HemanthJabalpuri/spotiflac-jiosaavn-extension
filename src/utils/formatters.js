@@ -85,11 +85,6 @@ function formatSong(song) {
     var duration = parseInt(more.duration, 10) || 0;
 
     var decryptedFull = decryptMediaUrl(more.encrypted_media_url);
-    try {
-        setCache("url_" + token, decryptedFull);
-    } catch (e) {
-        log.debug('[formatSong] Failed to store decrypted URL in storage');
-    }
 
     // Album artist
     var primaryArtists = (more.artistMap && more.artistMap.primary_artists) || [];
@@ -278,4 +273,37 @@ function formatHomeFeedItem(item, type) {
 
     // log.debug("[formatHomeFeedItem] Formatted " + itemType + ": " + result.name);
     return result;
+}
+
+// ----- Search item formatter (for autocomplete.get results) -----
+function formatSearchItem(raw, type) {
+    if (!raw) return null;
+    var token = extractToken(raw.perma_url);
+    if (!token) return null;
+
+    var artists = '';
+
+    if (type === 'track') {
+        var more = raw.more_info || {};
+        artists = decodeEntities(more.primary_artists || more.singers || raw.subtitle || '');
+    } else if (type === 'album') {
+        var more = raw.more_info || {};
+        artists = decodeEntities(more.music || raw.subtitle || '');
+    }
+
+    var item = {
+        id: token,
+        name: decodeEntities(raw.title || ""),
+        artists: artists,
+        cover_url: getHighResImageUrl(raw.image) || "",
+        item_type: type,
+        provider_id: EXT_ID
+    };
+
+    // Add isrc only for tracks
+    if (type === 'track') {
+        item.isrc = token;
+    }
+
+    return item;
 }

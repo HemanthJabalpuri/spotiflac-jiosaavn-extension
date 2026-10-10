@@ -24,6 +24,7 @@ for f in \
     src/api/collections.js \
     src/api/home.js \
     src/api/artists.js \
+    src/api/search.js \
     src/libs/des.js \
     src/utils/decrypt.js \
     src/utils/cache.js \

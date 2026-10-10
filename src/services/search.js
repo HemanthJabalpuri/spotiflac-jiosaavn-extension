@@ -23,14 +23,28 @@ function customSearch(query, options) {
         return searchArtistsService(query, limit);
     }
 
-    // "All" mode – use a small limit (2) per type to keep combined results manageable
-    var smallLimit = 2;
-    log.debug('[customSearch] No filter or "all" – combining all types with limit per type: ' + smallLimit);
-    var tracks = searchSongsService(query, smallLimit);
-    var albums = searchCollectionsService('album', query, smallLimit);
-    var playlists = searchCollectionsService('playlist', query, smallLimit);
-    var artists = searchArtistsService(query, smallLimit);
-    var combined = tracks.concat(albums).concat(playlists).concat(artists);
-    log.debug('[customSearch] Returning ' + combined.length + ' items (tracks: ' + tracks.length + ', albums: ' + albums.length + ', playlists: ' + playlists.length + ', artists: ' + artists.length + ')');
-    return combined;
+    // "all" or no filter – use autocomplete.get
+    log.debug('[customSearch] Filter: all – using autocomplete.get');
+    var data = searchAll(query);
+    if (!data) return [];
+
+    var results = [];
+    results = results.concat(parseSearchSection(data.songs, 'track'));
+    results = results.concat(parseSearchSection(data.albums, 'album'));
+    results = results.concat(parseSearchSection(data.playlists, 'playlist'));
+    results = results.concat(parseSearchSection(data.artists, 'artist'));
+
+    log.debug('[customSearch] Returning ' + results.length + ' total items');
+    return results;
+}
+
+// ----- Helper: parse a section from autocomplete response -----
+function parseSearchSection(section, type) {
+    if (!section || !section.data || !section.data.length) return [];
+    var out = [];
+    for (var i = 0; i < section.data.length; i++) {
+        var item = formatSearchItem(section.data[i], type);
+        if (item) out.push(item);
+    }
+    return out;
 }

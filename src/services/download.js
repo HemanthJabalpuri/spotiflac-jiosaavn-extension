@@ -1,6 +1,23 @@
 function enrichTrack(track) {
-    log.debug('[enrichTrack] Skipping enrich since track already have the metadata');
-    return track;
+    if (!track || !track.id) {
+        log.debug('[enrichTrack] No track or missing id');
+        return track;
+    }
+
+    // Fetch full song details
+    var song = getSongService(track.id);
+    if (!song) {
+        log.debug('[enrichTrack] Could not fetch song details');
+        return track;
+    }
+
+    // Store decrypted URL in cache
+    if (song.preview_url) {
+        setCache("url_" + track.id, song.preview_url);
+        log.debug('[enrichTrack] Cached URL for ' + track.id);
+    }
+
+    return song;  // return the deep, formatted track
 }
 
 // ----- Quality mapping -----------------------------------------

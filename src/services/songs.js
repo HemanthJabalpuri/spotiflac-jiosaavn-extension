@@ -11,6 +11,8 @@ function searchSongsService(query, limit) {
 }
 
 function getSongService(token) {
+    log.debug('[getSongService] Token: ' + token);
+
     var song = getSong(token);
     return song ? formatSong(song) : null;
 }

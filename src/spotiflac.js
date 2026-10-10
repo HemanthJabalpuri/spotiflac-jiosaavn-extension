@@ -8,7 +8,10 @@ registerExtension({
     forceCleanup: forceCleanup,
     searchTracks: searchSongsService,
     customSearch: customSearch,
-    getTrack: getSongService,
+    getTrack: function(token) {
+        log.debug('[getTrack] Token ' + token);
+        return getSongService(token);
+    },
 
     // ----- Collection detection: album or playlist? -----
     getAlbum: function(token) {
