@@ -9,8 +9,35 @@ function searchArtists(query, limit, page) {
     return result;
 }
 
+function getArtistById(artistId, category) {
+    // log.debug('[getArtistById] artistId: ' + artistId);
+    var params = {
+        artistId: artistId,
+        page: 0, // artist uses page starting from 0
+        n_song: 50,
+        n_album: 50,
+        sub_type: '',
+        category: category || 'popular',
+        sort_order: category === 'latest' ? 'desc' : 'asc'
+    };
+    var result = callAPI('artist.getArtistPageDetails', params);
+    if (!result) {
+        log.debug('[getArtistById] No artist found for id: ' + artistId);
+        return null;
+    }
+    log.debug('[getArtistById] Found artist: ' + (result.name || result.title || 'untitled'));
+    return result;
+}
+
 function getArtist(token, category) {
+    // Artist ID prefix detected
+    if (token && token.indexOf('artistid_') === 0) {
+        var artistId = token.substring('artistid_'.length);
+        return getArtistById(artistId);
+    }
+
     // log.debug('[getArtist] Token: ' + token + ', category: ' + category);
+
     var params = {
         token: token,
         type: 'artist',

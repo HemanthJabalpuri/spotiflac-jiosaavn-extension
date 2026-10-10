@@ -60,8 +60,7 @@ That's it. No account, no login, no API key.
 
 ### Option 2 — Build it yourself
 
-You need [Node.js](https://nodejs.org) only if you want to run the tests.
-Building itself needs nothing but Linux Shell.
+Building needs nothing but Linux Shell.
 
 ```bash
 git clone https://github.com/HemanthJabalpuri/spotiflac-jiosaavn-extension.git
@@ -129,7 +128,7 @@ Found under **Settings → Extensions → JioSaavn**.
 
 | Setting | Default | What it does |
 |---|---|---|
-| **Languages** | english | Langauge for Homefeed content (can be multiple) |
+| **Languages** | english | Language for Homefeed content (can be multiple) |
 
 One button is also there:
 

@@ -29,21 +29,51 @@ function customSearch(query, options) {
     if (!data) return [];
 
     var results = [];
-    results = results.concat(parseSearchSection(data.songs, 'track'));
-    results = results.concat(parseSearchSection(data.albums, 'album'));
-    results = results.concat(parseSearchSection(data.playlists, 'playlist'));
-    results = results.concat(parseSearchSection(data.artists, 'artist'));
+    var skipId = null;
+
+    // 1. Extract topquery item
+    if (data.topquery && data.topquery.data && data.topquery.data.length) {
+        var rawTop = data.topquery.data[0];
+        var topItem = formatSearchItem(rawTop, mapRawType(rawTop.type));
+        if (topItem) {
+            results.push(topItem);
+            skipId = rawTop.id;
+            log.debug('[customSearch] Added topquery item: ' + topItem.name + ' (' + rawTop.type + ')');
+        }
+    }
+
+    // 2. Add all sections (skip the topquery item by id)
+    var sections = [
+        { data: data.songs,     type: 'track' },
+        { data: data.albums,    type: 'album' },
+        { data: data.playlists, type: 'playlist' },
+        { data: data.artists,   type: 'artist' }
+    ];
+
+    for (var i = 0; i < sections.length; i++) {
+        results = results.concat(parseSearchSection(sections[i].data, sections[i].type, skipId));
+    }
 
     log.debug('[customSearch] Returning ' + results.length + ' total items');
     return results;
 }
 
+function mapRawType(rawType) {
+    return rawType === 'song' ? 'track' : rawType;
+}
+
 // ----- Helper: parse a section from autocomplete response -----
-function parseSearchSection(section, type) {
+function parseSearchSection(section, type, skipId) {
     if (!section || !section.data || !section.data.length) return [];
     var out = [];
     for (var i = 0; i < section.data.length; i++) {
-        var item = formatSearchItem(section.data[i], type);
+        var raw = section.data[i];
+        // Skip by raw.id (works for all types, including artists without perma_url)
+        if (skipId && raw.id === skipId) {
+            log.debug('[parseSearchSection] Skipping topquery item in ' + type + ' section');
+            continue;
+        }
+        var item = formatSearchItem(raw, type);
         if (item) out.push(item);
     }
     return out;

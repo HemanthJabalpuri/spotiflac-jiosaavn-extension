@@ -278,21 +278,27 @@ function formatHomeFeedItem(item, type) {
 // ----- Search item formatter (for autocomplete.get results) -----
 function formatSearchItem(raw, type) {
     if (!raw) return null;
-    var token = extractToken(raw.perma_url);
-    if (!token) return null;
+
+    var id;
+
+    if (type === 'artist') {
+        id = raw.id ? "artistid_" + raw.id : null;
+    } else {
+        id = extractToken(raw.perma_url);
+    }
+
+    if (!id) return null;
 
     var artists = '';
-
+    var more = raw.more_info || {};
     if (type === 'track') {
-        var more = raw.more_info || {};
         artists = decodeEntities(more.primary_artists || more.singers || raw.subtitle || '');
     } else if (type === 'album') {
-        var more = raw.more_info || {};
         artists = decodeEntities(more.music || raw.subtitle || '');
     }
 
     var item = {
-        id: token,
+        id: id,
         name: decodeEntities(raw.title || ""),
         artists: artists,
         cover_url: getHighResImageUrl(raw.image) || "",
@@ -301,7 +307,6 @@ function formatSearchItem(raw, type) {
     };
 
     if (type === 'track') {
-        var more = raw.more_info || {};
         if (more.album_id) {
             item.album_id = "albumid_" + more.album_id;
         }
