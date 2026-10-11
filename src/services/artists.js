@@ -15,9 +15,15 @@ function searchArtistsService(query, limit) {
 
 function getArtistService(token) {
     log.debug('[getArtistService] Artist ID: ' + token);
-    
-    // 1. Fetch main artist details
-    var artist = getArtist(token);
+
+    // Artist ID prefix detected
+    if (token && token.indexOf('artistid_') === 0) {
+        var artistId = token.substring('artistid_'.length);
+        var artist = getArtistById(artistId);
+    } else {
+        var artist = getArtistByToken(token);
+    }
+
     if (!artist) {
         log.debug('[getArtistService] No artist found');
         return null;

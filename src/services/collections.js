@@ -17,7 +17,15 @@ function searchCollectionsService(type, query, limit) {
 
 function getCollectionService(type, token) {
     log.debug('[getCollectionService] type: ' + type + ', token: ' + token);
-    var raw = getCollection(type, token);
+
+    // Album ID prefix detected
+    if (type === 'album' && token && token.indexOf('albumid_') === 0) {
+        var albumId = token.substring('albumid_'.length);
+        var raw = getAlbumById(albumId);
+    } else {
+        var raw = getCollectionByToken(type, token);
+    }
+
     if (!raw) {
         log.debug('[getCollectionService] No raw data for ' + type);
         return null;

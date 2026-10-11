@@ -29,13 +29,7 @@ function getArtistById(artistId, category) {
     return result;
 }
 
-function getArtist(token, category) {
-    // Artist ID prefix detected
-    if (token && token.indexOf('artistid_') === 0) {
-        var artistId = token.substring('artistid_'.length);
-        return getArtistById(artistId);
-    }
-
+function getArtistByToken(token, category) {
     // log.debug('[getArtist] Token: ' + token + ', category: ' + category);
 
     var params = {

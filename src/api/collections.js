@@ -20,14 +20,8 @@ function getAlbumById(albumId) {
     return result;
 }
 
-function getCollection(type, token) {
+function getCollectionByToken(type, token) {
     // log.debug('[getCollection] type: ' + type + ', token: ' + token);
-
-    // Album ID prefix detected
-    if (type === 'album' && token && token.indexOf('albumid_') === 0) {
-        var albumId = token.substring('albumid_'.length);
-        return getAlbumById(albumId);
-    }
 
     // Playlist or album token path
     var extra = { token: token, type: type, includeMetaTags: 0 };
