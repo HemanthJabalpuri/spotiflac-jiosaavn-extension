@@ -29,7 +29,15 @@ function getArtistById(artistId, category) {
     return result;
 }
 
-function getArtistByToken(token, category) {
+function getArtist(token, category) {
+    // Artist ID prefix detected
+    token = catalogReference(token);
+    if (!token) return null;
+    var artistId = token.replace(/^artistid_/, '');
+    if (/^\d+$/.test(artistId)) {
+        return getArtistById(artistId, category);
+    }
+
     // log.debug('[getArtist] Token: ' + token + ', category: ' + category);
 
     var params = {

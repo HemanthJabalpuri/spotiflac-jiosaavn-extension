@@ -1,7 +1,10 @@
 function customSearch(query, options) {
     log.debug('[customSearch] Query: ' + query + ', options: ' + JSON.stringify(options));
 
-    var filter = (options && options.filter) || null;
+    options = typeof options === 'string' ? { filter: options } : options || {};
+    var aliases = { song: 'tracks', songs: 'tracks', track: 'tracks', album: 'albums', playlist: 'playlists', artist: 'artists' };
+    var filter = String(options.filter || '').toLowerCase();
+    filter = aliases[filter] || filter;
     var limit = (options && options.limit) || 20; // default to 20 if not provided
 
     // Filtered mode – use the provided limit

@@ -27,9 +27,12 @@ function base64ToBinaryString(str) {
 }
 
 function decryptMediaUrl(encrypted) {
+    if (typeof encrypted !== 'string' || !encrypted) return '';
     var binary = base64ToBinaryString(encrypted);
+    if (!binary.length || binary.length % 8) return '';
     var plain = desDecrypt(binary, DES_KEY);
     // Remove PKCS#7 padding (last byte = pad length)
     var padLen = plain.charCodeAt(plain.length - 1);
-    return plain.slice(0, plain.length - padLen);
+    if (padLen > 0 && padLen <= 8) plain = plain.slice(0, plain.length - padLen);
+    return mediaUrl(plain);
 }

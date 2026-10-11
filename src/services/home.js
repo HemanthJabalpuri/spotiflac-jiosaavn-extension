@@ -8,7 +8,7 @@ function getTimeBasedGreeting() {
 
 // ----- Extract and format a single section -----
 function extractSection(key, moduleMeta, sectionData) {
-    var supportedTypes = ['song', 'album', 'playlist', 'artist'];
+    var supportedTypes = ['song', 'track', 'album', 'playlist', 'artist'];
 
     if (!sectionData || !sectionData.length) {
         log.debug('[extractSection] Skipping empty section: ' + key);

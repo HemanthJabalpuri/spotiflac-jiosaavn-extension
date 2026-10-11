@@ -89,10 +89,10 @@ function cleanup(force) {
 }
 
 function initialize(config) {
-    settings = config || {};
+    var settings = config || {};
     log.info("Extension initialized with settings:", settings.lang);
 
-    storage.set("lang", settings.lang);
+    storage.set("lang", settings.lang || 'english');
     // Run cleanup on init
     cleanup();
     return true;
